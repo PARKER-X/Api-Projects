@@ -7,7 +7,7 @@ templates = Jinja2Templates(directory="templates")
 
 
 @app.get("/")
-async def home(request: Request):
+async def index(request: Request):
     url = "https://dog.ceo/api/breeds/image/random"
     async with httpx.AsyncClient() as client:
         response = await client.get(url)
