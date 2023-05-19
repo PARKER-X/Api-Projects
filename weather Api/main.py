@@ -11,12 +11,12 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def get_weather(request: Request):
-    # Location and API Key
-    location = "New York"
+    #API KEY
     api_key = "e0a8f641eec576db55848eb85593028a"
 
     # API URL
-    url = f"http://api.weatherapi.com/v1/current.json?key={api_key}&q={location}"
+    
+    url = f"https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid={api_key}"
     print(url)
 
     async with aiohttp.ClientSession() as session:
@@ -25,12 +25,10 @@ async def get_weather(request: Request):
             print(data)
 
     # Extract weather information from the response
-    temperature = data["current"]["temp_c"]
-    humidity = data["current"]["humidity"]
-    weather_description = data["current"]["condition"]["text"]
-
+    temperature = data["weather"]
+   
     # Render the HTML template with weather data
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "temperature": temperature, "humidity": humidity, "description": weather_description},
+        {"request": request, "temperature": temperature},
     )
