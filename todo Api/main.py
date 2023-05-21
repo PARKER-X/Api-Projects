@@ -55,13 +55,13 @@ def delete_todo(todo_id:int):
 
 @app.put("/todos/{todo_id}")
 def update_todo(todo_id:int, updated_todo:TodoCreate):
-    todo_index = todo_index(todo_id)
-    if todo_index is not None:
-        todo_item = todo_items[todo_index]
-        todo_item.task = updated_todo.task
-        todo_item.description = updated_todo.description
-        todo_item.summary = updated_todo.summary
-        todo_item.completed = updated_todo.completed
+    todo = todo_index(todo_id)
+    if todo is not None:
+        todo_item = todo_items[todo]
+        todo_item["task"] = updated_todo.task
+        todo_item["description"] = updated_todo.description
+        todo_item["summary"] = updated_todo.summary
+        todo_item["completed"] = updated_todo.completed
         return {"message": "Todo item updated successfully"}
     return {"message": "Todo item not found"}
     
